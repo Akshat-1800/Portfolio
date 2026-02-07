@@ -10,11 +10,11 @@ import Image from "next/image";
 function FeaturedProjectCard({ project }) {
   return (
     <motion.div
-      className="bg-white dark:bg-gray-800 rounded-3xl overflow-hidden border border-gray-100 dark:border-gray-700 shadow-xl mb-12"
+      className="bg-white dark:bg-gray-800 rounded-3xl overflow-hidden border border-gray-100 dark:border-gray-700 shadow-xl hover:shadow-2xl transition-shadow duration-300 mb-12"
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.8 }}
+      transition={{ duration: 0.6 }}
     >
       <div className="grid md:grid-cols-2 gap-0">
         {/* Image */}
@@ -34,7 +34,7 @@ function FeaturedProjectCard({ project }) {
             </div>
           )}
           <div className="absolute top-4 left-4 z-10">
-            <span className="px-3 py-1 text-xs font-semibold text-white bg-gradient-to-r from-blue-600 to-purple-600 rounded-full">
+            <span className="px-3 py-1.5 text-xs font-semibold text-white bg-gradient-to-r from-blue-600 to-purple-600 rounded-full shadow-lg">
               Featured Project
             </span>
           </div>
@@ -91,16 +91,22 @@ function FeaturedProjectCard({ project }) {
 function ProjectCard({ project, index }) {
   const [isHovered, setIsHovered] = useState(false);
 
+  const handleInteraction = () => {
+    // Toggle on mobile tap
+    setIsHovered(!isHovered);
+  };
+
   return (
     <motion.div
-      className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-800 dark:to-gray-700 aspect-[4/3] cursor-pointer"
+      className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-800 dark:to-gray-700 aspect-[4/3] cursor-pointer shadow-lg hover:shadow-xl transition-shadow duration-300"
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.6, delay: index * 0.1 }}
+      transition={{ duration: 0.5, delay: index * 0.08 }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      whileHover={{ scale: 1.02, y: -8 }}
+      onClick={handleInteraction}
+      whileHover={{ scale: 1.02, y: -4 }}
     >
       {/* Project Image */}
       {project.image ? (
@@ -122,35 +128,35 @@ function ProjectCard({ project, index }) {
       <AnimatePresence>
         {isHovered && (
           <motion.div
-            className="absolute inset-0 bg-gradient-to-t from-gray-900/95 via-gray-900/80 to-gray-900/60 flex flex-col justify-end p-6"
+            className="absolute inset-0 bg-gradient-to-t from-gray-900/95 via-gray-900/80 to-gray-900/60 flex flex-col justify-end p-5"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.25 }}
           >
             <motion.h3
-              className="text-xl font-bold text-white mb-2"
+              className="text-lg font-bold text-white mb-2 line-clamp-1"
               initial={{ y: 10, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.1 }}
+              transition={{ delay: 0.05, duration: 0.2 }}
             >
               {project.title}
             </motion.h3>
             <motion.p
-              className="text-gray-300 text-sm mb-4 line-clamp-2"
+              className="text-gray-300 text-sm mb-3 line-clamp-2"
               initial={{ y: 10, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.15 }}
+              transition={{ delay: 0.1, duration: 0.2 }}
             >
               {project.description}
             </motion.p>
 
             {/* Tech Stack */}
             <motion.div
-              className="flex flex-wrap gap-1 mb-4"
+              className="flex flex-wrap gap-1 mb-3"
               initial={{ y: 10, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.2 }}
+              transition={{ delay: 0.15, duration: 0.2 }}
             >
               {project.techStack.slice(0, 3).map((tech) => (
                 <span
@@ -171,13 +177,13 @@ function ProjectCard({ project, index }) {
               className="flex gap-3"
               initial={{ y: 10, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.25 }}
+              transition={{ delay: 0.2, duration: 0.2 }}
             >
               <a
                 href={project.links.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all"
+                className="px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-200"
               >
                 Explore Project
               </a>
@@ -186,7 +192,7 @@ function ProjectCard({ project, index }) {
                   href={project.links.live}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-2 text-white bg-white/10 rounded-lg hover:bg-white/20 transition-all"
+                  className="p-2 text-white bg-white/10 rounded-lg hover:bg-white/20 transition-all duration-200"
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
@@ -206,8 +212,9 @@ function ProjectCard({ project, index }) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
           >
-            <h3 className="text-lg font-semibold text-white">{project.title}</h3>
+            <h3 className="text-lg font-semibold text-white truncate">{project.title}</h3>
           </motion.div>
         )}
       </AnimatePresence>

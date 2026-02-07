@@ -11,7 +11,7 @@ export function Button({
   className = "",
   ...props 
 }) {
-  const baseStyles = "inline-flex items-center justify-center font-medium rounded-lg transition-all duration-300 cursor-pointer";
+  const baseStyles = "inline-flex items-center justify-center font-medium rounded-lg transition-all duration-200 cursor-pointer";
   
   const variants = {
     primary: "bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-lg hover:shadow-xl",
@@ -35,6 +35,7 @@ export function Button({
         className={combinedClassName}
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
+        transition={{ duration: 0.2 }}
         {...props}
       >
         {children}
@@ -48,6 +49,7 @@ export function Button({
       className={combinedClassName}
       whileHover={{ scale: 1.02 }}
       whileTap={{ scale: 0.98 }}
+      transition={{ duration: 0.2 }}
       {...props}
     >
       {children}

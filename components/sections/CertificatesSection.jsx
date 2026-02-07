@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
 import { SectionWrapper, SectionHeader } from "../ui/Section";
 import { getFeaturedCertificates, getOtherCertificates } from "../../lib/data/certificates";
@@ -9,38 +9,39 @@ import Image from "next/image";
 function CertificateCard({ certificate, featured = false }) {
   return (
     <motion.div
-      className={`bg-white dark:bg-gray-800 rounded-2xl overflow-hidden border border-gray-100 dark:border-gray-700 shadow-lg h-[280px] ${
-        featured ? "w-full" : "min-w-[300px] w-[300px] flex-shrink-0"
+      className={`bg-white dark:bg-gray-800 rounded-2xl overflow-hidden border border-gray-100 dark:border-gray-700 shadow-lg hover:shadow-xl transition-shadow duration-300 ${
+        featured ? "w-full h-[320px]" : "min-w-[300px] w-[300px] flex-shrink-0 h-[300px]"
       }`}
       whileHover={{ scale: 1.02, y: -4 }}
-      transition={{ duration: 0.3 }}
+      transition={{ duration: 0.25, ease: "easeOut" }}
     >
       {/* Certificate Image */}
-      <div className="relative bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-600 h-44">
+      <div className="relative bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-600 h-40">
         {/* Placeholder */}
         <div className="absolute inset-0 flex items-center justify-center">
           <svg className="w-16 h-16 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
           </svg>
         </div>
-        {/* Uncomment when adding actual images */}
         <Image
           src={certificate.image}
           alt={certificate.title}
           fill
-          className="object-cover"
+          className="object-cover object-top"
         />
       </div>
 
-      {/* Content */}
-      <div className="p-5">
-        <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-1 line-clamp-2">
+      {/* Content - Flex column with fixed structure */}
+      <div className="p-4 flex flex-col h-[calc(100%-10rem)]">
+        <h3 className="text-base font-bold text-gray-900 dark:text-white mb-1 line-clamp-2 break-words">
           {certificate.title}
         </h3>
-        <p className="text-blue-600 dark:text-blue-400 text-sm font-medium mb-2">
+        <p className="text-blue-600 dark:text-blue-400 text-sm font-medium mb-2 truncate">
           {certificate.issuer}
         </p>
-        <div className="flex items-center justify-between">
+        {/* Spacer to push footer to bottom */}
+        <div className="flex-grow" />
+        <div className="flex items-center justify-between mt-auto pt-2">
           <span className="text-sm text-gray-500 dark:text-gray-400">
             {certificate.year}
           </span>
@@ -48,8 +49,9 @@ function CertificateCard({ certificate, featured = false }) {
             href={certificate.credentialUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-sm text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1"
+            className="text-sm text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1 flex-shrink-0"
             whileHover={{ x: 2 }}
+            transition={{ duration: 0.2 }}
           >
             Verify
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -64,18 +66,67 @@ function CertificateCard({ certificate, featured = false }) {
 
 export default function CertificatesSection() {
   const carouselRef = useRef(null);
+  const [isPaused, setIsPaused] = useState(false);
+  const intervalRef = useRef(null);
   const featuredCerts = getFeaturedCertificates();
   const otherCerts = getOtherCertificates();
 
-  const scroll = (direction) => {
-    if (carouselRef.current) {
-      const scrollAmount = 300;
-      carouselRef.current.scrollBy({
-        left: direction === "left" ? -scrollAmount : scrollAmount,
-        behavior: "smooth",
-      });
+  // Scroll function - memoized to prevent recreation
+  const scroll = useCallback((direction) => {
+    const container = carouselRef.current;
+    if (!container) return;
+
+    const cardWidth = 306; // card width (300px) + gap (6px)
+    const maxScroll = container.scrollWidth - container.clientWidth;
+    const currentScroll = container.scrollLeft;
+
+    if (direction === "right") {
+      // If at or near end, loop back to start
+      if (currentScroll >= maxScroll - 10) {
+        container.scrollTo({ left: 0, behavior: "smooth" });
+      } else {
+        container.scrollBy({ left: cardWidth, behavior: "smooth" });
+      }
+    } else {
+      // If at or near start, loop to end
+      if (currentScroll <= 10) {
+        container.scrollTo({ left: maxScroll, behavior: "smooth" });
+      } else {
+        container.scrollBy({ left: -cardWidth, behavior: "smooth" });
+      }
     }
-  };
+  }, []);
+
+  // Autoplay functionality with proper cleanup
+  useEffect(() => {
+    // Clear any existing interval
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    }
+
+    // Don't start if paused or no certs
+    if (isPaused || otherCerts.length === 0) return;
+
+    // Start autoplay
+    intervalRef.current = setInterval(() => {
+      scroll("right");
+    }, 3000);
+
+    // Cleanup on unmount or dependency change
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
+    };
+  }, [isPaused, scroll, otherCerts.length]);
+
+  // Pause handlers
+  const handleMouseEnter = useCallback(() => setIsPaused(true), []);
+  const handleMouseLeave = useCallback(() => setIsPaused(false), []);
+  const handleTouchStart = useCallback(() => setIsPaused(true), []);
+  const handleTouchEnd = useCallback(() => setIsPaused(false), []);
 
   return (
     <SectionWrapper id="certificates" className="bg-white dark:bg-gray-950">
@@ -110,8 +161,9 @@ export default function CertificatesSection() {
           <motion.button
             onClick={() => scroll("left")}
             className="p-2 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700"
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            transition={{ duration: 0.2 }}
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -119,9 +171,10 @@ export default function CertificatesSection() {
           </motion.button>
           <motion.button
             onClick={() => scroll("right")}
-            className="p-2 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700"
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
+            className="p-2 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            transition={{ duration: 0.2 }}
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -132,8 +185,12 @@ export default function CertificatesSection() {
         {/* Carousel */}
         <div
           ref={carouselRef}
-          className="flex gap-6 overflow-x-auto scrollbar-hide pb-4 -mx-4 px-4 snap-x snap-mandatory"
+          className="flex gap-6 overflow-x-auto scrollbar-hide py-4 -mx-4 px-4 snap-x snap-mandatory"
           style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
         >
           {otherCerts.map((cert, index) => (
             <motion.div
@@ -142,7 +199,7 @@ export default function CertificatesSection() {
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
+              transition={{ duration: 0.4, delay: index * 0.08 }}
             >
               <CertificateCard certificate={cert} />
             </motion.div>
