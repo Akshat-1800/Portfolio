@@ -9,8 +9,13 @@ import Image from "next/image";
 
 export default function ProfileSection() {
   return (
-    <SectionWrapper id="about" className="bg-white dark:bg-gray-950">
-      <div className="grid md:grid-cols-2 gap-12 lg:gap-16 items-start">
+    <SectionWrapper id="about" className="bg-white/50 dark:bg-gray-950/50 relative">
+      {/* Subtle background accent */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-1/4 -right-1/4 w-[600px] h-[600px] bg-purple-500/5 dark:bg-purple-500/10 rounded-full blur-3xl" />
+      </div>
+      
+      <div className="relative grid md:grid-cols-2 gap-12 lg:gap-16 items-start">
         {/* Profile Image */}
         <motion.div
           className="relative"
@@ -21,11 +26,11 @@ export default function ProfileSection() {
         >
           <div className="relative w-full max-w-md aspect-square mx-auto">
             {/* Decorative background */}
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-purple-600 rounded-3xl transform rotate-6 opacity-20" />
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-purple-600 rounded-3xl transform -rotate-3 opacity-10" />
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-purple-600 rounded-3xl transform rotate-6 opacity-15 dark:opacity-25 blur-sm" />
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-purple-600 rounded-3xl transform -rotate-3 opacity-10 dark:opacity-15 blur-sm" />
             
             {/* Image container */}
-            <div className="relative w-full h-full bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-800 rounded-3xl overflow-hidden border-4 border-white dark:border-gray-800 shadow-2xl">
+            <div className="relative w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-800 rounded-3xl overflow-hidden border-4 border-white/80 dark:border-gray-800/80 shadow-2xl shadow-gray-900/10 dark:shadow-black/30 backdrop-blur-sm">
               <Image
                 src="https://res.cloudinary.com/djozpdgv1/image/upload/f_auto,q_auto,w_800/v1770473887/Portfolio_img_hhrnza.png"
                 alt="Profile"

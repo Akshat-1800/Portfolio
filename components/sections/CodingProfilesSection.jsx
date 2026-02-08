@@ -58,21 +58,29 @@ function CodingProfileCard({ profile, index }) {
 
   return (
     <motion.div
-      className="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-100 dark:border-gray-700 shadow-lg hover:shadow-xl transition-shadow duration-300"
+      className="group relative bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl p-6 border border-gray-100/80 dark:border-gray-700/60 shadow-lg transition-all duration-300"
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-      whileHover={{ y: -4 }}
+      transition={{ duration: 0.5, delay: index * 0.1, ease: [0.4, 0, 0.2, 1] }}
+      whileHover={{ 
+        y: -6,
+        boxShadow: "0 0 0 1px rgba(59, 130, 246, 0.1), 0 0 30px -10px rgba(59, 130, 246, 0.15), 0 25px 50px -12px rgba(0, 0, 0, 0.15)"
+      }}
     >
+      {/* Subtle glow overlay */}
+      <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-blue-500/5 via-transparent to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
       {/* Header */}
-      <div className="flex items-center gap-4 mb-6">
-        <div
-          className="p-3 rounded-xl"
-          style={{ backgroundColor: `${profile.color}20`, color: profile.color }}
+      <div className="relative flex items-center gap-4 mb-6">
+        <motion.div
+          className="p-3 rounded-xl transition-all duration-300 group-hover:scale-105"
+          style={{ backgroundColor: `${profile.color}15`, color: profile.color }}
+          whileHover={{ scale: 1.1 }}
         >
-          {getIcon(profile.icon)}
-        </div>
+          <span className="group-hover:drop-shadow-[0_0_8px_currentColor] transition-all duration-300">
+            {getIcon(profile.icon)}
+          </span>
+        </motion.div>
         <div>
           <h3 className="text-xl font-bold text-gray-900 dark:text-white">
             {profile.platform}
@@ -84,10 +92,10 @@ function CodingProfileCard({ profile, index }) {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-3 gap-4 mb-6">
+      <div className="relative grid grid-cols-3 gap-4 mb-6">
         {getStats(profile).map((stat) => (
           <div key={stat.label} className="text-center">
-            <p className="text-2xl font-bold text-gray-900 dark:text-white">
+            <p className="text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
               {stat.value}
             </p>
             <p className="text-xs text-gray-500 dark:text-gray-400">
@@ -117,7 +125,12 @@ function CodingProfileCard({ profile, index }) {
 
 export default function CodingProfilesSection() {
   return (
-    <SectionWrapper id="coding" className="bg-white dark:bg-gray-950">
+    <SectionWrapper id="coding" className="bg-white/50 dark:bg-gray-950/50 relative">
+      {/* Background accent */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-1/2 left-1/4 w-[500px] h-[300px] bg-blue-500/5 dark:bg-blue-500/10 rounded-full blur-3xl" />
+      </div>
+      
       <SectionHeader
         title="Coding Profiles"
         subtitle="My presence across competitive programming platforms"

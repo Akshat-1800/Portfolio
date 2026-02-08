@@ -29,7 +29,12 @@ const educationData = [
 
 export default function EducationSection() {
   return (
-    <SectionWrapper id="education" className="bg-gray-50 dark:bg-gray-900/50">
+    <SectionWrapper id="education" className="bg-gray-50/50 dark:bg-gray-900/30 relative">
+      {/* Subtle background glow */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-blue-500/5 dark:bg-blue-500/10 rounded-full blur-3xl" />
+      </div>
+      
       <SectionHeader
         title="Education"
         subtitle="My academic journey and qualifications"
@@ -55,9 +60,12 @@ export default function EducationSection() {
               {/* Content */}
               <div className={`ml-8 md:ml-0 md:w-1/2 ${index % 2 === 0 ? "md:pr-12 md:text-right" : "md:pl-12"}`}>
                 <motion.div
-                  className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg hover:shadow-xl border border-gray-100 dark:border-gray-700 transition-shadow duration-300"
-                  whileHover={{ scale: 1.01 }}
-                  transition={{ duration: 0.25 }}
+                  className="group bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-gray-100/80 dark:border-gray-700/60 transition-all duration-300"
+                  whileHover={{ 
+                    scale: 1.02,
+                    boxShadow: "0 0 0 1px rgba(59, 130, 246, 0.1), 0 0 30px -10px rgba(59, 130, 246, 0.15), 0 20px 40px -15px rgba(0, 0, 0, 0.1)"
+                  }}
+                  transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
                 >
                   <span className="inline-block px-3 py-1 text-sm font-medium text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30 rounded-full mb-3">
                     {item.year}
@@ -76,11 +84,11 @@ export default function EducationSection() {
 
               {/* Timeline Dot */}
               <motion.div
-                className="absolute left-0 md:left-1/2 transform -translate-x-1/2 w-4 h-4 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 border-4 border-white dark:border-gray-900 shadow-lg"
+                className="absolute left-0 md:left-1/2 transform -translate-x-1/2 w-4 h-4 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 border-4 border-white dark:border-gray-900 shadow-lg shadow-blue-500/30"
                 initial={{ scale: 0 }}
                 whileInView={{ scale: 1 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: index * 0.2 + 0.3 }}
+                transition={{ duration: 0.4, delay: index * 0.2 + 0.3, ease: [0.4, 0, 0.2, 1] }}
               />
             </motion.div>
           ))}

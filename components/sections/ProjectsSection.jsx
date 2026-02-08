@@ -10,12 +10,17 @@ import Image from "next/image";
 function FeaturedProjectCard({ project }) {
   return (
     <motion.div
-      className="bg-white dark:bg-gray-800 rounded-3xl overflow-hidden border border-gray-100 dark:border-gray-700 shadow-xl hover:shadow-2xl transition-shadow duration-300 mb-12"
+      className="group relative bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-3xl overflow-hidden border border-gray-200/60 dark:border-gray-700/60 shadow-xl transition-all duration-500 mb-12"
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.6 }}
+      transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
+      whileHover={{ 
+        boxShadow: "0 0 0 1px rgba(59, 130, 246, 0.1), 0 0 40px -10px rgba(59, 130, 246, 0.2), 0 25px 50px -12px rgba(0, 0, 0, 0.15)"
+      }}
     >
+      {/* Gradient border glow */}
+      <div className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none bg-gradient-to-br from-blue-500/5 via-purple-500/5 to-pink-500/5" />
       <div className="grid md:grid-cols-2 gap-0">
         {/* Image */}
         <div className="relative h-64 md:h-auto min-h-[300px] bg-gradient-to-br from-blue-500/20 via-purple-500/20 to-pink-500/20">
@@ -98,23 +103,30 @@ function ProjectCard({ project, index }) {
 
   return (
     <motion.div
-      className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-800 dark:to-gray-700 aspect-[4/3] cursor-pointer shadow-lg hover:shadow-xl transition-shadow duration-300"
+      className="group relative rounded-2xl overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-700 aspect-[4/3] cursor-pointer shadow-lg transition-all duration-300"
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.5, delay: index * 0.08 }}
+      transition={{ duration: 0.5, delay: index * 0.08, ease: [0.4, 0, 0.2, 1] }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onClick={handleInteraction}
-      whileHover={{ scale: 1.02, y: -4 }}
+      whileHover={{ scale: 1.03, y: -6 }}
+      style={{
+        boxShadow: isHovered 
+          ? "0 0 0 1px rgba(59, 130, 246, 0.15), 0 0 30px -5px rgba(59, 130, 246, 0.15), 0 25px 50px -12px rgba(0, 0, 0, 0.2)"
+          : undefined
+      }}
     >
+      {/* Glow ring effect */}
+      <div className="absolute -inset-[1px] rounded-2xl bg-gradient-to-br from-blue-500/20 via-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10 blur-sm" />
       {/* Project Image */}
       {project.image ? (
         <Image
           src={project.image}
           alt={project.title}
           fill
-          className="object-cover"
+          className="object-cover transition-transform duration-500 group-hover:scale-105"
         />
       ) : (
         <div className="absolute inset-0 flex items-center justify-center">
@@ -183,7 +195,7 @@ function ProjectCard({ project, index }) {
                 href={project.links.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-200"
+                className="px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg hover:from-blue-500 hover:to-purple-500 shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 transition-all duration-300"
               >
                 Explore Project
               </a>
@@ -227,7 +239,12 @@ export default function ProjectsSection() {
   const otherProjects = getOtherProjects();
 
   return (
-    <SectionWrapper id="projects" className="bg-gray-50 dark:bg-gray-900/50">
+    <SectionWrapper id="projects" className="bg-gray-50/50 dark:bg-gray-900/30 relative">
+      {/* Subtle background glow */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-blue-500/5 dark:bg-blue-500/10 rounded-full blur-3xl" />
+      </div>
+      
       <SectionHeader
         title="Projects"
         subtitle="A selection of my recent work and side projects"

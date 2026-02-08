@@ -9,14 +9,22 @@ import Image from "next/image";
 function CertificateCard({ certificate, featured = false }) {
   return (
     <motion.div
-      className={`bg-white dark:bg-gray-800 rounded-2xl overflow-hidden border border-gray-100 dark:border-gray-700 shadow-lg hover:shadow-xl transition-shadow duration-300 ${
+      className={`group relative bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl overflow-hidden border border-gray-200/60 dark:border-gray-700/60 shadow-lg transition-all duration-300 ${
         featured ? "w-full h-[320px]" : "min-w-[300px] w-[300px] flex-shrink-0 h-[300px]"
       }`}
-      whileHover={{ scale: 1.02, y: -4 }}
-      transition={{ duration: 0.25, ease: "easeOut" }}
+      whileHover={{ scale: 1.03, y: -6 }}
+      transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+      style={{ transformOrigin: "center center" }}
     >
+      {/* Gradient border glow on hover */}
+      <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+        style={{
+          background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1))',
+          filter: 'blur(1px)',
+        }}
+      />
       {/* Certificate Image */}
-      <div className="relative bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-600 h-40">
+      <div className="relative bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-600 h-40 overflow-hidden">
         {/* Placeholder */}
         <div className="absolute inset-0 flex items-center justify-center">
           <svg className="w-16 h-16 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -27,8 +35,10 @@ function CertificateCard({ certificate, featured = false }) {
           src={certificate.image}
           alt={certificate.title}
           fill
-          className="object-cover object-top"
+          className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
         />
+        {/* Subtle overlay on hover */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
       </div>
 
       {/* Content - Flex column with fixed structure */}
