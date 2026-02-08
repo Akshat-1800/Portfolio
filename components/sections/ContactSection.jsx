@@ -29,16 +29,16 @@ export default function ContactSection() {
 
           {/* Email */}
           <motion.a
-            href="mailto:jaiswalakshat874@gmail.com"
+            href="mailto:dev.akshat.j@gmail.com"
             className="inline-block text-2xl md:text-3xl font-semibold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-8 hover:opacity-80 transition-opacity"
             whileHover={{ scale: 1.02 }}
           >
-            jaiswalakshat874@gmail.com
+            dev.akshat.j@gmail.com
           </motion.a>
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
-            <Button variant="primary" size="lg" href="mailto:jaiswalakshat874@gmail.com">
+            <Button variant="primary" size="lg" href="mailto:dev.akshat.j@gmail.com">
               <span className="flex items-center gap-2">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -51,7 +51,7 @@ export default function ContactSection() {
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
-                Download Resume
+                View Resume
               </span>
             </Button>
           </div>
@@ -100,7 +100,7 @@ export default function ContactSection() {
             </motion.a> */}
 
             <motion.a
-              href="mailto:hello@developer.com"
+              href="mailto:dev.akshat.j@gmail.com"
               className="group p-4 rounded-2xl bg-gray-100/90 dark:bg-gray-800/90 text-gray-700 dark:text-gray-300 hover:text-red-500 dark:hover:text-red-400 hover:bg-white dark:hover:bg-gray-700 border border-transparent hover:border-gray-200/80 dark:hover:border-gray-700/80 hover:shadow-md transition-all duration-200"
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
