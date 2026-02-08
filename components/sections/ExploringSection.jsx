@@ -47,7 +47,7 @@ export default function ExploringSection() {
     <SectionWrapper id="exploring" className="bg-gray-50/50 dark:bg-gray-900/30 relative">
       {/* Background accent */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[300px] bg-purple-500/5 dark:bg-purple-500/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 right-1/4 w-[300px] sm:w-[500px] h-[200px] sm:h-[300px] bg-purple-500/5 dark:bg-purple-500/10 rounded-full blur-2xl sm:blur-3xl" />
       </div>
       
       <SectionHeader

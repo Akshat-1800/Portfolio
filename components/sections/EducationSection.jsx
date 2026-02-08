@@ -32,7 +32,7 @@ export default function EducationSection() {
     <SectionWrapper id="education" className="bg-gray-50/50 dark:bg-gray-900/30 relative">
       {/* Subtle background glow */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-blue-500/5 dark:bg-blue-500/10 rounded-full blur-3xl" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] sm:w-[600px] h-[250px] sm:h-[400px] bg-blue-500/5 dark:bg-blue-500/10 rounded-full blur-2xl sm:blur-3xl" />
       </div>
       
       <SectionHeader

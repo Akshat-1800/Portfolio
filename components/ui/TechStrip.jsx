@@ -8,7 +8,7 @@ export default function TechStrip() {
   const duplicatedStack = [...techStack, ...techStack];
 
   return (
-    <div className="w-full">
+    <div className="md:max-w-full max-w-[90vw]">
       {/* Section Heading */}
       <motion.p
         initial={{ opacity: 0, x: -20 }}

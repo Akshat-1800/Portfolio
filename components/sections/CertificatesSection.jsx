@@ -10,7 +10,7 @@ function CertificateCard({ certificate, featured = false }) {
   return (
     <motion.div
       className={`group relative bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl overflow-hidden border border-gray-200/60 dark:border-gray-700/60 shadow-lg transition-all duration-300 ${
-        featured ? "w-full h-[320px]" : "min-w-[300px] w-[300px] flex-shrink-0 h-[300px]"
+        featured ? "w-full h-[320px]" : "min-w-[280px] w-[280px] sm:min-w-[300px] sm:w-[300px] flex-shrink-0 h-[300px]"
       }`}
       whileHover={{ scale: 1.03, y: -6 }}
       transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}

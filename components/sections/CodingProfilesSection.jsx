@@ -58,7 +58,7 @@ function CodingProfileCard({ profile, index }) {
 
   return (
     <motion.div
-      className="group relative bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl p-6 border border-gray-100/80 dark:border-gray-700/60 shadow-lg transition-all duration-300"
+      className="group relative bg-white/95 dark:bg-gray-800/95 rounded-2xl p-6 border border-gray-100/80 dark:border-gray-700/60 shadow-lg transition-all duration-200"
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
@@ -73,11 +73,11 @@ function CodingProfileCard({ profile, index }) {
       {/* Header */}
       <div className="relative flex items-center gap-4 mb-6">
         <motion.div
-          className="p-3 rounded-xl transition-all duration-300 group-hover:scale-105"
+          className="p-3 rounded-xl transition-all duration-200 group-hover:scale-105"
           style={{ backgroundColor: `${profile.color}15`, color: profile.color }}
-          whileHover={{ scale: 1.1 }}
+          whileHover={{ scale: 1.08 }}
         >
-          <span className="group-hover:drop-shadow-[0_0_8px_currentColor] transition-all duration-300">
+          <span className="transition-colors duration-200">
             {getIcon(profile.icon)}
           </span>
         </motion.div>
@@ -128,7 +128,7 @@ export default function CodingProfilesSection() {
     <SectionWrapper id="coding" className="bg-white/50 dark:bg-gray-950/50 relative">
       {/* Background accent */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/2 left-1/4 w-[500px] h-[300px] bg-blue-500/5 dark:bg-blue-500/10 rounded-full blur-3xl" />
+        <div className="absolute top-1/2 left-1/4 w-[400px] h-[250px] bg-blue-500/4 dark:bg-blue-500/8 rounded-full blur-2xl transform-gpu" />
       </div>
       
       <SectionHeader

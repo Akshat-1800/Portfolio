@@ -14,17 +14,17 @@ export default function HeroSection() {
   return (
     <section
       id="home"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden max-w-full"
     >
       {/* Animated Background */}
       <div className="absolute inset-0 bg-gradient-to-br from-gray-50 via-blue-50/50 to-purple-50/50 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950">
         {/* Gradient Orbs - Enhanced with smoother, larger orbs */}
         <motion.div
-          className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-blue-500/15 dark:bg-blue-500/20 rounded-full blur-[100px]"
+          className="absolute top-1/4 left-1/4 w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] bg-blue-500/15 dark:bg-blue-500/20 rounded-full blur-[60px] sm:blur-[100px]"
           animate={{
-            x: [0, 60, 0],
-            y: [0, 40, 0],
-            scale: [1, 1.1, 1],
+            x: [0, 30, 0],
+            y: [0, 20, 0],
+            scale: [1, 1.05, 1],
           }}
           transition={{
             duration: 12,
@@ -33,11 +33,11 @@ export default function HeroSection() {
           }}
         />
         <motion.div
-          className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] bg-purple-500/15 dark:bg-purple-500/20 rounded-full blur-[120px]"
+          className="absolute bottom-1/4 right-1/4 w-[350px] sm:w-[600px] h-[350px] sm:h-[600px] bg-purple-500/15 dark:bg-purple-500/20 rounded-full blur-[70px] sm:blur-[120px]"
           animate={{
-            x: [0, -60, 0],
-            y: [0, -40, 0],
-            scale: [1, 1.15, 1],
+            x: [0, -30, 0],
+            y: [0, -20, 0],
+            scale: [1, 1.08, 1],
           }}
           transition={{
             duration: 15,
@@ -46,11 +46,11 @@ export default function HeroSection() {
           }}
         />
         <motion.div
-          className="absolute top-1/2 right-1/3 w-[350px] h-[350px] bg-pink-500/10 dark:bg-pink-500/15 rounded-full blur-[80px]"
+          className="absolute top-1/2 right-1/3 w-[200px] sm:w-[350px] h-[200px] sm:h-[350px] bg-pink-500/10 dark:bg-pink-500/15 rounded-full blur-[50px] sm:blur-[80px]"
           animate={{
-            x: [0, 40, 0],
-            y: [0, -30, 0],
-            scale: [1, 1.08, 1],
+            x: [0, 20, 0],
+            y: [0, -15, 0],
+            scale: [1, 1.04, 1],
           }}
           transition={{
             duration: 18,
@@ -60,10 +60,10 @@ export default function HeroSection() {
         />
         {/* Additional subtle cyan orb */}
         <motion.div
-          className="absolute bottom-1/3 left-1/3 w-[300px] h-[300px] bg-cyan-500/8 dark:bg-cyan-500/12 rounded-full blur-[90px]"
+          className="absolute bottom-1/3 left-1/3 w-[180px] sm:w-[300px] h-[180px] sm:h-[300px] bg-cyan-500/8 dark:bg-cyan-500/12 rounded-full blur-[50px] sm:blur-[90px]"
           animate={{
-            x: [0, -30, 0],
-            y: [0, 50, 0],
+            x: [0, -15, 0],
+            y: [0, 25, 0],
           }}
           transition={{
             duration: 20,
