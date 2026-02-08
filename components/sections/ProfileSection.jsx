@@ -60,13 +60,13 @@ export default function ProfileSection() {
 
           <div className="space-y-4 text-gray-600 dark:text-gray-400 text-lg leading-relaxed mb-8 w-full max-w-full break-words overflow-wrap-anywhere hyphens-auto">
             <p className="w-full break-words">
-              I'm a full-stack developer passionate about building scalable applications and reliable software systems that work efficiently in real-world environments. I enjoy solving complex engineering problems and transforming ideas into clean, well-structured, and production-ready solutions. I value teamwork and collaborative development, and I enjoy working with others to design and build systems that are both practical and impactful.
+              I'm a full-stack developer passionate about building scalable applications and reliable software systems that perform efficiently in real-world environments. Enjoys solving complex engineering challenges and transforming ideas into clean, well-structured, production-ready solutions. Strongly values teamwork and collaborative development, with a focus on designing and building systems that are both practical and impactful.
             </p>
             <p className="w-full break-words">
-              Currently, I’m focused on developing high-performance applications using modern technologies like Next.js, TypeScript, and cloud-native architectures. I actively leverage agentic AI tools during development to improve productivity, accelerate problem-solving, and build smarter, more efficient solutions while maintaining strong engineering fundamentals and clean, maintainable code.
+              Currently focused on developing high-performance applications using modern technologies such as Next.js, JavaScript, and cloud-native architectures. Actively leverages AI tools during development to enhance productivity, accelerate problem-solving, and create smarter, more efficient solutions while maintaining strong engineering fundamentals and clean, maintainable code.
             </p>
             <p className="w-full break-words">
-              Outside of coding, I enjoy playing cricket, exploring new technologies, and learning more about emerging AI tools to continuously improve my technical and problem-solving skills.
+              Beyond coding, interests include playing cricket, exploring new technologies, and learning about emerging AI tools to continuously strengthen technical knowledge and problem-solving capabilities.
             </p>
           </div>
 
